@@ -72,7 +72,7 @@ public class RegisterContactListener(
         await Task.CompletedTask;
     }
 
-    private Contact MessageToEntity(RegisterContactModel message) =>
+    private static Contact MessageToEntity(RegisterContactModel message) =>
         new Contact(
             message.Id,
             message.RegistrationDate,
@@ -81,5 +81,6 @@ public class RegisterContactListener(
             message.DDDId,
             message.PhoneNumber,
             message.Email,
-            message.UserId);
+            message.UserId
+        );
 }
