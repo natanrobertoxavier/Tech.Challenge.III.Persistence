@@ -1,9 +1,8 @@
-﻿using RabbitMq.Package.Contract;
-using RabbitMq.Package.Handlers;
-using RabbitMq.Package.Settings;
+﻿using RabbitMq.Package.Settings;
 using Serilog;
-using Tech.Challenge.Persistence.Api.MessagesHandler;
-using Tech.Challenge.Persistence.Infrasctructure.Provider;
+using Tech.Challenge.Persistence.Api.Listeners;
+using Tech.Challenge.Persistence.Api.Models;
+using Tech.Challenge.Persistence.Api.Settings;
 using Tech.Challenge.Persistence.Infrasctructure.Queue;
 
 namespace Tech.Challenge.Persistence.Api;
@@ -39,16 +38,6 @@ public static class Initializer
 
         configuration.GetSection("RabbitMqSettings").Bind(config);
 
-        var connectionString = new RabbitMqQueueConnection()
-        {
-            ConnectionString = config.ComposedConnectionString
-        };
-
-        services.AddSingleton<IConnectionProvider<RabbitMqQueueConnection>>(_ =>
-            new RabbitMqConnectionProvider(connectionString));
-
-        //services.AddSingleton<IRabbitMqQueueHandler<RabbitMqQueueConnection>, RabbitMqQueueHandler>();
-
         services
             .AddQueueHandler(config.ComposedConnectionString)
             .DeclareQueues(
@@ -63,7 +52,7 @@ public static class Initializer
                 )
             ;
 
-        services.AddHostedService<DeleteContactQueueHandler>(); 
-
+        services.AddTransient<QueueListenerBase<DeleteContactModel>, DeleteContactListener>();
+        services.AddHostedService<QueueListenerHostedService<DeleteContactModel>>();
     }
 }

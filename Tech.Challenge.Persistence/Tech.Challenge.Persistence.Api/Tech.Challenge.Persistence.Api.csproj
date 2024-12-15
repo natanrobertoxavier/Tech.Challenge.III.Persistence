@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Tech.Challenge.Persistence.Exceptions\Tech.Challenge.Persistence.Exceptions.csproj" />
     <ProjectReference Include="..\Tech.Challenge.Persistence.Infrasctructure\Tech.Challenge.Persistence.Infrasctructure.csproj" />
   </ItemGroup>
 
