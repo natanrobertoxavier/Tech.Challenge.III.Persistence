@@ -58,6 +58,7 @@ public static class Initializer
     {
         services
             .AddScoped<IContactReadOnlyRepository, ContactReadOnlyRepository>()
+            .AddScoped<IContactWriteOnlyRepository, ContactWriteOnlyRepository>()
             .AddScoped<IContactDeleteOnlyRepository, ContactDeleteOnlyRepository>();
     }
 }

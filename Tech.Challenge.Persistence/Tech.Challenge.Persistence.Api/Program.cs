@@ -1,8 +1,8 @@
 using Tech.Challenge.Persistence.Api;
-using Tech.Challenge.Persistence.Infrasctructure;
-using Tech.Challenge.Persistence.Infrasctructure.RepositoryAccess;
 using Tech.Challenge.Persistence.Domain.Extension;
+using Tech.Challenge.Persistence.Infrasctructure;
 using Tech.Challenge.Persistence.Infrasctructure.Migrations;
+using Tech.Challenge.Persistence.Infrasctructure.RepositoryAccess;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,7 +17,6 @@ builder.Services.AddConfiguration(builder.Configuration);
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

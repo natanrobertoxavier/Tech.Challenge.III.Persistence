@@ -53,6 +53,8 @@ public static class Initializer
             ;
 
         services.AddTransient<QueueListenerBase<DeleteContactModel>, DeleteContactListener>();
+        services.AddTransient<QueueListenerBase<RegisterContactModel>, RegisterContactListener>();
         services.AddHostedService<QueueListenerHostedService<DeleteContactModel>>();
+        services.AddHostedService<QueueListenerHostedService<RegisterContactModel>>();
     }
 }
