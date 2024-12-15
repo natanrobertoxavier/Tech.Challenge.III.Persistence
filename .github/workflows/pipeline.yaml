@@ -1,0 +1,64 @@
+name: .NET Build, Unit, and Integration Tests, and Publish
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Build, Test and Publish
+    runs-on: self-hosted
+
+    steps:
+    # - name: Backup existing code and logs
+    #   run: |
+    #     TIMESTAMP=$(date +"%Y-%m-%d-%H:%M:%S")
+    #     CONTAINER_NAME="techchallengepersistence_container"
+    #     LOG_FILE="/home/natan/backups/tech-challenge-persistence-logs-$TIMESTAMP.log"
+    #     docker logs $CONTAINER_NAME > $LOG_FILE        
+    #     zip -r /home/natan/backups/tech-challenge-persistence-backup-$TIMESTAMP.zip ${{ github.workspace }} $LOG_FILE
+    #     rm $LOG_FILE
+
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Check running user
+      run: whoami
+      
+    # removido pois no meu host já tenho as versões do dotnet instaladas
+    # - name: Setup .NET Core SDK
+    #   uses: actions/setup-dotnet@v3
+    #   with:
+    #     dotnet-version: '8.x'
+
+    - name: Restore dependencies
+      run: dotnet restore Tech.Challenge.Persistence/Tech.Challenge.Persistence.sln
+
+    - name: Build the project
+      run: dotnet build Tech.Challenge.Persistence/Tech.Challenge.Persistence.sln --no-restore --configuration Release
+
+    - name: Run unit tests
+      run: dotnet test Tech.Challenge.Persistence/Tech.Challenge.Persistence.Tests/Tech.Challenge.Persistence.Tests.csproj --no-build --configuration Release --logger "trx;LogFileName=unit-test-tec-challenge-persistence-results.trx"
+
+    - name: Run integration tests
+      run: dotnet test Tech.Challenge.Persistence/Tech.Challenge.Persistence.Integration.Tests/Tech.Challenge.Persistence.Integration.Tests.csproj --no-build --configuration Release --logger "trx;LogFileName=integration-test-tech-challenge-persistence-results.trx"
+
+    - name: Publish the project
+      if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/release/')
+      run: dotnet publish Contact.Persistence/Contact.Persistence.sln --no-build --configuration Release --output ${{ github.workspace }}/publish
+
+    - name: Replace appsettings tech.challenge
+      run: cp -f /home/natan/appsettings/appsettings.json ${{ github.workspace }}/Tech.Challenge.Persistence/Tech.Challenge.Persistence.Api/appsettings.json
+    
+    - name: Stop and remove existing containers
+      run: |
+        cd Tech.Challenge.Persistence && docker-compose -f docker-compose.yaml down
+
+    - name: Build Docker image
+      run: |
+        cd Tech.Challenge.Persistence && sudo docker build -t techchallengepersistence:latest .
+
+    - name: Deploy using Docker Compose
+      run: |
+        cd Tech.Challenge.Persistence && docker-compose -f docker-compose.yaml up -d --build
