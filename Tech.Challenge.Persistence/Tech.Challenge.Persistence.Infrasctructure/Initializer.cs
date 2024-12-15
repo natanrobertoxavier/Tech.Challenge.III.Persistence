@@ -3,14 +3,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
-using Tech.Challenge.Persistence.Domain.Repositories.Contact;
-using Tech.Challenge.Persistence.Infrasctructure.RepositoryAccess;
 using Tech.Challenge.Persistence.Domain.Extension;
 using Tech.Challenge.Persistence.Domain.Repositories;
-using Tech.Challenge.Persistence.Infrasctructure.RepositoryAccess.Repository.Contact;
+using Tech.Challenge.Persistence.Domain.Repositories.Contact;
 using Tech.Challenge.Persistence.Domain.Repositories.Region;
-using Tech.Challenge.Persistence.Infrasctructure.RepositoryAccess.Repository.Region;
 using Tech.Challenge.Persistence.Domain.Repositories.User;
+using Tech.Challenge.Persistence.Infrasctructure.RepositoryAccess;
+using Tech.Challenge.Persistence.Infrasctructure.RepositoryAccess.Repository.Contact;
+using Tech.Challenge.Persistence.Infrasctructure.RepositoryAccess.Repository.Region;
 using Tech.Challenge.Persistence.Infrasctructure.RepositoryAccess.Repository.User;
 
 namespace Tech.Challenge.Persistence.Infrasctructure;

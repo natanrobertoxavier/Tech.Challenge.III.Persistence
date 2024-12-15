@@ -2,7 +2,6 @@
 using Moq;
 using RabbitMQ.Client;
 using Serilog;
-using Tech.Challenge.Persistence.Api.Listeners;
 using Tech.Challenge.Persistence.Api.Models;
 using Tech.Challenge.Persistence.Domain.Entities;
 using Tech.Challenge.Persistence.Domain.Repositories;

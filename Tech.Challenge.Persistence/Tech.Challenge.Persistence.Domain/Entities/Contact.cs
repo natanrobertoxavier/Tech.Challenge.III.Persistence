@@ -17,13 +17,13 @@ public class Contact(
     public Guid UserId { get; set; } = userId;
 
     public Contact() : this(
-        Guid.Empty, 
-        DateTime.MinValue, 
-        string.Empty, 
-        string.Empty, 
-        Guid.Empty, 
-        string.Empty, 
-        string.Empty, 
+        Guid.Empty,
+        DateTime.MinValue,
+        string.Empty,
+        string.Empty,
+        Guid.Empty,
+        string.Empty,
+        string.Empty,
         Guid.NewGuid())
     { }
 }

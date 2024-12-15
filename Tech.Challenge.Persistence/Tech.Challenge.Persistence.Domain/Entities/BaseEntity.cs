@@ -1,6 +1,6 @@
 ﻿namespace Tech.Challenge.Persistence.Domain.Entities;
 public class BaseEntity(
-    Guid id, 
+    Guid id,
     DateTime registrationDate)
 {
     public Guid Id { get; set; } = id;

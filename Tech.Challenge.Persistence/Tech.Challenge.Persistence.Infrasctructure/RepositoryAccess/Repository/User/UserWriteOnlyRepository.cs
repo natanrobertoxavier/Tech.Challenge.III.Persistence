@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Tech.Challenge.Persistence.Domain.Repositories.User;
+﻿using Tech.Challenge.Persistence.Domain.Repositories.User;
 
 namespace Tech.Challenge.Persistence.Infrasctructure.RepositoryAccess.Repository.User;
 public class UserWriteOnlyRepository(TechChallengeContext context) : IUserWriteOnlyRepository

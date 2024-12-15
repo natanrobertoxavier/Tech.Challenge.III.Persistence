@@ -1,6 +1,4 @@
-﻿using Tech.Challenge.Persistence.Domain.Entities;
-
-namespace Tech.Challenge.Persistence.Api.Models;
+﻿namespace Tech.Challenge.Persistence.Api.Models;
 
 public class RegisterRegionDDDModel
 {

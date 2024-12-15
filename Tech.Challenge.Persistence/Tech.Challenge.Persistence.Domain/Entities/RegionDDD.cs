@@ -2,7 +2,7 @@
 public class RegionDDD(
     Guid id,
     DateTime registrationDate,
-    int dDD, 
+    int dDD,
     string region,
     Guid userId) : BaseEntity(id, registrationDate)
 {

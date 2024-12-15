@@ -1,6 +1,5 @@
 ﻿using RabbitMQ.Client;
 using Tech.Challenge.Persistence.Api.Models;
-using Tech.Challenge.Persistence.Domain.Entities;
 using Tech.Challenge.Persistence.Domain.Repositories;
 using Tech.Challenge.Persistence.Domain.Repositories.Contact;
 using Tech.Challenge.Persistence.Exceptions;
@@ -37,7 +36,7 @@ public class DeleteContactListener(
                 {
                     var notFoundMessage = $"No information found for id: {message.ContactId}";
 
-                    throw new NotFoundException(notFoundMessage); 
+                    throw new NotFoundException(notFoundMessage);
                 }
 
                 contactDeleteOnlyRepository.Remove(contact);

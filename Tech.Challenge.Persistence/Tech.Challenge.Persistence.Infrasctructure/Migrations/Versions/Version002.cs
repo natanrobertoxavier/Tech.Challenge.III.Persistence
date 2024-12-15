@@ -1,6 +1,5 @@
 ﻿using FluentMigrator;
 using System.Diagnostics.CodeAnalysis;
-using Tech.Challenge.Persistence.Infrasctructure.Migrations;
 
 namespace Tech.Challenge.Persistence.Infrasctructure.Migrations.Versions;
 

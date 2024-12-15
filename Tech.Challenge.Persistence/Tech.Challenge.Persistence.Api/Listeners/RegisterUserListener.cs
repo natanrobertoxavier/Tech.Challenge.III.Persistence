@@ -2,7 +2,6 @@
 using Tech.Challenge.Persistence.Api.Models;
 using Tech.Challenge.Persistence.Domain.Entities;
 using Tech.Challenge.Persistence.Domain.Repositories;
-using Tech.Challenge.Persistence.Domain.Repositories.Region;
 using Tech.Challenge.Persistence.Domain.Repositories.User;
 using Tech.Challenge.Persistence.Exceptions;
 using Tech.Challenge.Persistence.Infrasctructure.Queue;
