@@ -3,48 +3,49 @@ using Tech.Challenge.Persistence.Api.Models;
 using Tech.Challenge.Persistence.Domain.Entities;
 using Tech.Challenge.Persistence.Domain.Repositories;
 using Tech.Challenge.Persistence.Domain.Repositories.Region;
+using Tech.Challenge.Persistence.Domain.Repositories.User;
 using Tech.Challenge.Persistence.Exceptions;
 using Tech.Challenge.Persistence.Infrasctructure.Queue;
 
 namespace Tech.Challenge.Persistence.Api.Listeners;
 
-public class RegisterRegionDDDListener(
+public class RegisterUserListener(
     IConnectionFactory connectionFactory,
     Serilog.ILogger logger,
     IServiceScopeFactory scopeFactory)
-    : QueueListenerBase<RegisterRegionDDDModel>(
-        RabbitMqConstants.RegisterRegionQueueName,
+    : QueueListenerBase<RegisterUserModel>(
+        RabbitMqConstants.RegisterUserQueueName,
         connectionFactory)
 {
     private readonly Serilog.ILogger _logger = logger;
     private readonly IServiceScopeFactory _scopeFactory = scopeFactory;
 
-    protected async override Task ProcessMessageAsync(RegisterRegionDDDModel message)
+    protected async override Task ProcessMessageAsync(RegisterUserModel message)
     {
         try
         {
-            _logger.Information($"Starting region DDD register processing. DDD: {message.DDD}");
+            _logger.Information($"Starting user register processing. Name: {message.Name}");
 
             using (var scope = _scopeFactory.CreateScope())
             {
                 var workUnit = scope.ServiceProvider.GetRequiredService<IWorkUnit>();
-                var regionReadOnlyRepository = scope.ServiceProvider.GetRequiredService<IRegionDDDReadOnlyRepository>();
-                var regionWriteOnlyRepository = scope.ServiceProvider.GetRequiredService<IRegionWriteOnlyRepository>();
+                var userReadOnlyRepository = scope.ServiceProvider.GetRequiredService<IUserReadOnlyRepository>();
+                var userWriteOnlyRepository = scope.ServiceProvider.GetRequiredService<IUserWriteOnlyRepository>();
 
-                var thereIsDDD = await regionReadOnlyRepository.ThereIsDDDNumber(message.DDD);
+                var thereIsDDD = await userReadOnlyRepository.ThereIsUserWithEmail(message.Email);
 
                 if (thereIsDDD)
                 {
-                    var thereIsMessage = $"DDD already registered. DDD: {message.DDD}";
+                    var thereIsMessage = $"User already registered. Name: {message.Name}";
 
                     throw new AlreadyRegisteredException(thereIsMessage);
                 }
 
-                await regionWriteOnlyRepository.Add(MessageToEntity(message));
+                await userWriteOnlyRepository.Add(MessageToEntity(message));
                 await workUnit.Commit();
             }
 
-            _logger.Information($"Region DDD register processing completed.");
+            _logger.Information($"User register processing completed.");
         }
         catch (AlreadyRegisteredException ex)
         {
@@ -62,7 +63,7 @@ public class RegisterRegionDDDListener(
 
         if (ex is AlreadyRegisteredException)
         {
-            _logger.Information("DDD already registered, skipping.");
+            _logger.Information("User already registered, skipping.");
         }
         else
         {
@@ -72,12 +73,12 @@ public class RegisterRegionDDDListener(
         await Task.CompletedTask;
     }
 
-    private static RegionDDD MessageToEntity(RegisterRegionDDDModel message) =>
-        new RegionDDD(
+    private static User MessageToEntity(RegisterUserModel message) =>
+        new User(
             message.Id,
             message.RegistrationDate,
-            message.DDD,
-            message.Region,
-            message.UserId
+            message.Name,
+            message.Email,
+            message.Password
         );
 }

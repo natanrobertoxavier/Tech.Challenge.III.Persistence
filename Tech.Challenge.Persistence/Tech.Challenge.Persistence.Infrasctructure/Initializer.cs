@@ -10,6 +10,8 @@ using Tech.Challenge.Persistence.Domain.Repositories;
 using Tech.Challenge.Persistence.Infrasctructure.RepositoryAccess.Repository.Contact;
 using Tech.Challenge.Persistence.Domain.Repositories.Region;
 using Tech.Challenge.Persistence.Infrasctructure.RepositoryAccess.Repository.Region;
+using Tech.Challenge.Persistence.Domain.Repositories.User;
+using Tech.Challenge.Persistence.Infrasctructure.RepositoryAccess.Repository.User;
 
 namespace Tech.Challenge.Persistence.Infrasctructure;
 public static class Initializer
@@ -63,6 +65,8 @@ public static class Initializer
             .AddScoped<IContactWriteOnlyRepository, ContactWriteOnlyRepository>()
             .AddScoped<IContactDeleteOnlyRepository, ContactDeleteOnlyRepository>()
             .AddScoped<IRegionDDDReadOnlyRepository, RegionDDDReadOnlyRepository>()
-            .AddScoped<IRegionWriteOnlyRepository, RegionWriteOnlyRepository>();
+            .AddScoped<IRegionWriteOnlyRepository, RegionWriteOnlyRepository>()
+            .AddScoped<IUserReadOnlyRepository, UserReadOnlyRepository>()
+            .AddScoped<IUserWriteOnlyRepository, UserWriteOnlyRepository>();
     }
 }
