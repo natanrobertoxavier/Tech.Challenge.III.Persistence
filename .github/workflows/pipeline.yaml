@@ -39,7 +39,7 @@ jobs:
       run: dotnet build Tech.Challenge.Persistence/Tech.Challenge.Persistence.sln --no-restore --configuration Release
 
     - name: Run unit tests
-      run: dotnet test Tech.Challenge.Persistence/Tech.Challenge.Persistence.Tests/Tech.Challenge.Persistence.Tests.csproj --no-build --configuration Release --logger "trx;LogFileName=unit-test-tec-challenge-persistence-results.trx"
+      run: dotnet test Tech.Challenge.Persistence/Tech.Challenge.Persistentece.Tests/Tech.Challenge.Persistentece.Tests.csproj --no-build --configuration Release --logger "trx;LogFileName=unit-test-tec-challenge-persistence-results.trx"
 
     - name: Run integration tests
       run: dotnet test Tech.Challenge.Persistence/Tech.Challenge.Persistence.Integration.Tests/Tech.Challenge.Persistence.Integration.Tests.csproj --no-build --configuration Release --logger "trx;LogFileName=integration-test-tech-challenge-persistence-results.trx"
