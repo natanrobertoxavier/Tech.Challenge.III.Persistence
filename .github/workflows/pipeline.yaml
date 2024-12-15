@@ -46,7 +46,7 @@ jobs:
 
     - name: Publish the project
       if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/release/')
-      run: dotnet publish Contact.Persistence/Contact.Persistence.sln --no-build --configuration Release --output ${{ github.workspace }}/publish
+      run: dotnet publish Tech.Challenge.Persistence/Tech.Challenge.Persistence.sln --no-build --configuration Release --output ${{ github.workspace }}/publish
 
     - name: Replace appsettings tech.challenge
       run: cp -f /home/natan/appsettings/appsettings.json ${{ github.workspace }}/Tech.Challenge.Persistence/Tech.Challenge.Persistence.Api/appsettings.json
