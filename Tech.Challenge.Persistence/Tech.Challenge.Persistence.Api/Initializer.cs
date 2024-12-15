@@ -48,13 +48,20 @@ public static class Initializer
                 new RabbitMqQueue(
                     exchangeName: RabbitMqConstants.ContactPersistenceExchange,
                     routingKeyName: RabbitMqConstants.DeleteContactRoutingKey,
-                    queueName: RabbitMqConstants.DeleteContactQueueName)
+                    queueName: RabbitMqConstants.DeleteContactQueueName),
+                new RabbitMqQueue(
+                    exchangeName: RabbitMqConstants.RegionPersistenceExchange,
+                    routingKeyName: RabbitMqConstants.RegisterRegionRoutingKey,
+                    queueName: RabbitMqConstants.RegisterRegionQueueName)
                 )
             ;
 
         services.AddTransient<QueueListenerBase<DeleteContactModel>, DeleteContactListener>();
         services.AddTransient<QueueListenerBase<RegisterContactModel>, RegisterContactListener>();
+        services.AddTransient<QueueListenerBase<RegisterRegionDDDModel>, RegisterRegionDDDListener>();
+
         services.AddHostedService<QueueListenerHostedService<DeleteContactModel>>();
         services.AddHostedService<QueueListenerHostedService<RegisterContactModel>>();
+        services.AddHostedService<QueueListenerHostedService<RegisterRegionDDDModel>>();
     }
 }
